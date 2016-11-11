@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BookstoreDBModelStoreContainer" CdmEntityContainer="BookstoreDBEntities">
+    <EntitySetMapping Name="author_table">
+      <EntityTypeMapping TypeName="BookstoreDBModel.author_table">
+        <MappingFragment StoreEntitySet="author_table">
+          <ScalarProperty Name="author_id" ColumnName="author_id" />
+          <ScalarProperty Name="author_name" ColumnName="author_name" />
+          <ScalarProperty Name="author_country" ColumnName="author_country" />
+          <ScalarProperty Name="author_age" ColumnName="author_age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="book_table">
+      <EntityTypeMapping TypeName="BookstoreDBModel.book_table">
+        <MappingFragment StoreEntitySet="book_table">
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="author_id" ColumnName="author_id" />
+          <ScalarProperty Name="book_title" ColumnName="book_title" />
+          <ScalarProperty Name="book_price" ColumnName="book_price" />
+          <ScalarProperty Name="book_genre" ColumnName="book_genre" />
+          <ScalarProperty Name="bookstore_id" ColumnName="bookstore_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="bookstore_table">
+      <EntityTypeMapping TypeName="BookstoreDBModel.bookstore_table">
+        <MappingFragment StoreEntitySet="bookstore_table">
+          <ScalarProperty Name="bookstore_id" ColumnName="bookstore_id" />
+          <ScalarProperty Name="bookstore_name" ColumnName="bookstore_name" />
+          <ScalarProperty Name="bookstore_location" ColumnName="bookstore_location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BookstoreDBModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="author_book">
+      <EntityTypeMapping TypeName="BookstoreDBModel.author_book">
+        <MappingFragment StoreEntitySet="author_book">
+          <ScalarProperty Name="author_id" ColumnName="author_id" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="author_book_id" ColumnName="author_book_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="BookstoreDBModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="BookstoreDBModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="BookstoreDBModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="BookstoreDBModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookstoreDBModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="BookstoreDBModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookstoreDBModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BookstoreDBModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BookstoreDBModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spAddNewAuthor" FunctionName="BookstoreDBModel.Store.spAddNewAuthor" />
+    <FunctionImportMapping FunctionImportName="spAddNewBook" FunctionName="BookstoreDBModel.Store.spAddNewBook" />
+    <FunctionImportMapping FunctionImportName="spAddNewBookstore" FunctionName="BookstoreDBModel.Store.spAddNewBookstore" />
+    <FunctionImportMapping FunctionImportName="spDeleteAuthorByID" FunctionName="BookstoreDBModel.Store.spDeleteAuthorByID" />
+    <FunctionImportMapping FunctionImportName="spDeleteBookByID" FunctionName="BookstoreDBModel.Store.spDeleteBookByID" />
+    <FunctionImportMapping FunctionImportName="spDeleteBookstoreByID" FunctionName="BookstoreDBModel.Store.spDeleteBookstoreByID" />
+    <FunctionImportMapping FunctionImportName="spGetAuthorByID" FunctionName="BookstoreDBModel.Store.spGetAuthorByID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookstoreDBModel.spGetAuthorByID_Result">
+          <ScalarProperty Name="author_age" ColumnName="author_age" />
+          <ScalarProperty Name="author_country" ColumnName="author_country" />
+          <ScalarProperty Name="author_name" ColumnName="author_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetBookByID" FunctionName="BookstoreDBModel.Store.spGetBookByID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookstoreDBModel.spGetBookByID_Result">
+          <ScalarProperty Name="book_genre" ColumnName="book_genre" />
+          <ScalarProperty Name="book_price" ColumnName="book_price" />
+          <ScalarProperty Name="book_title" ColumnName="book_title" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetBookstoreByID" FunctionName="BookstoreDBModel.Store.spGetBookstoreByID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BookstoreDBModel.spGetBookstoreByID_Result">
+          <ScalarProperty Name="bookstore_location" ColumnName="bookstore_location" />
+          <ScalarProperty Name="bookstore_name" ColumnName="bookstore_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spUpdateAuthor" FunctionName="BookstoreDBModel.Store.spUpdateAuthor" />
+    <FunctionImportMapping FunctionImportName="spUpdateBook" FunctionName="BookstoreDBModel.Store.spUpdateBook" />
+    <FunctionImportMapping FunctionImportName="spUpdateBookstore" FunctionName="BookstoreDBModel.Store.spUpdateBookstore" />
+  </EntityContainerMapping>
+</Mapping>

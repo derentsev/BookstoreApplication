@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookstoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BookstoreDB.dbo.author_book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="author_book">
+          <Key>
+            <PropertyRef Name="author_id" />
+            <PropertyRef Name="book_id" />
+            <PropertyRef Name="author_book_id" />
+          </Key>
+          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="book_id" Type="int" Nullable="false" />
+          <Property Name="author_book_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="author_table">
+          <Key>
+            <PropertyRef Name="author_id" />
+          </Key>
+          <Property Name="author_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="author_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="author_country" Type="nvarchar" MaxLength="25" />
+          <Property Name="author_age" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="book_table">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="book_title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="book_price" Type="int" Nullable="false" />
+          <Property Name="book_genre" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="bookstore_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bookstore_table">
+          <Key>
+            <PropertyRef Name="bookstore_id" />
+          </Key>
+          <Property Name="bookstore_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bookstore_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="bookstore_location" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_author_book_author_table">
+          <End Role="author_table" Type="Self.author_table" Multiplicity="1" />
+          <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author_table">
+              <PropertyRef Name="author_id" />
+            </Principal>
+            <Dependent Role="author_book">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_author_book_book_table1">
+          <End Role="book_table" Type="Self.book_table" Multiplicity="1" />
+          <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book_table">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="author_book">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_book_table_bookstore_table">
+          <End Role="bookstore_table" Type="Self.bookstore_table" Multiplicity="1" />
+          <End Role="book_table" Type="Self.book_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bookstore_table">
+              <PropertyRef Name="bookstore_id" />
+            </Principal>
+            <Dependent Role="book_table">
+              <PropertyRef Name="bookstore_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spAddNewAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AuthorName" Type="varchar" Mode="In" />
+          <Parameter Name="AuthorAge" Type="tinyint" Mode="In" />
+          <Parameter Name="AuthorCountry" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spAddNewBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookTitle" Type="varchar" Mode="In" />
+          <Parameter Name="BookPrice" Type="int" Mode="In" />
+          <Parameter Name="BookGenre" Type="varchar" Mode="In" />
+          <Parameter Name="BookstoreID" Type="int" Mode="In" />
+          <Parameter Name="AuthorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spAddNewBookstore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookstoreLocation" Type="varchar" Mode="In" />
+          <Parameter Name="BookstoreName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spDeleteAuthorByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AuthorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spDeleteBookByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spDeleteBookstoreByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookstoreID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetAuthorByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AuthorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetBookByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetBookstoreByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookstoreID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUpdateAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AuthorName" Type="varchar" Mode="In" />
+          <Parameter Name="AuthorCountry" Type="varchar" Mode="In" />
+          <Parameter Name="AuthorAge" Type="int" Mode="In" />
+          <Parameter Name="AuthorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUpdateBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookTitle" Type="varchar" Mode="In" />
+          <Parameter Name="BookGenre" Type="varchar" Mode="In" />
+          <Parameter Name="BookPrice" Type="int" Mode="In" />
+          <Parameter Name="BookID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUpdateBookstore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BookstoreLocation" Type="varchar" Mode="In" />
+          <Parameter Name="BookstoreName" Type="varchar" Mode="In" />
+          <Parameter Name="BookstoreID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="BookstoreDBModelStoreContainer">
+          <EntitySet Name="author_table" EntityType="Self.author_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="book_table" EntityType="Self.book_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bookstore_table" EntityType="Self.bookstore_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="author_book" EntityType="Self.author_book" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [author_book].[author_id] AS [author_id], 
+    [author_book].[book_id] AS [book_id], 
+    [author_book].[author_book_id] AS [author_book_id]
+    FROM [dbo].[author_book] AS [author_book]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_author_book_author_table" Association="Self.FK_author_book_author_table">
+            <End Role="author_table" EntitySet="author_table" />
+            <End Role="author_book" EntitySet="author_book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_author_book_book_table1" Association="Self.FK_author_book_book_table1">
+            <End Role="book_table" EntitySet="book_table" />
+            <End Role="author_book" EntitySet="author_book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_book_table_bookstore_table" Association="Self.FK_book_table_bookstore_table">
+            <End Role="bookstore_table" EntitySet="bookstore_table" />
+            <End Role="book_table" EntitySet="book_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookstoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="author_table">
+          <Key>
+            <PropertyRef Name="author_id" />
+          </Key>
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="author_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="author_country" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="author_age" Type="Byte" />
+          <NavigationProperty Name="author_book" Relationship="Self.FK_author_book_author_table" FromRole="author_table" ToRole="author_book" />
+        </EntityType>
+        <EntityType Name="book_table">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="book_title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="book_price" Type="Int32" Nullable="false" />
+          <Property Name="book_genre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="bookstore_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="author_book" Relationship="Self.FK_author_book_book_table1" FromRole="book_table" ToRole="author_book" />
+          <NavigationProperty Name="bookstore_table" Relationship="Self.FK_book_table_bookstore_table" FromRole="book_table" ToRole="bookstore_table" />
+        </EntityType>
+        <EntityType Name="bookstore_table">
+          <Key>
+            <PropertyRef Name="bookstore_id" />
+          </Key>
+          <Property Name="bookstore_id" Type="Int32" Nullable="false" />
+          <Property Name="bookstore_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bookstore_location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="book_table" Relationship="Self.FK_book_table_bookstore_table" FromRole="bookstore_table" ToRole="book_table" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="author_book">
+          <Key>
+            <PropertyRef Name="author_id" />
+            <PropertyRef Name="book_id" />
+            <PropertyRef Name="author_book_id" />
+          </Key>
+          <Property Name="author_id" Type="Int32" Nullable="false" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="author_book_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="author_table" Relationship="Self.FK_author_book_author_table" FromRole="author_book" ToRole="author_table" />
+          <NavigationProperty Name="book_table" Relationship="Self.FK_author_book_book_table1" FromRole="author_book" ToRole="book_table" />
+        </EntityType>
+        <Association Name="FK_author_book_author_table">
+          <End Role="author_table" Type="Self.author_table" Multiplicity="1" />
+          <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author_table">
+              <PropertyRef Name="author_id" />
+            </Principal>
+            <Dependent Role="author_book">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_author_book_book_table1">
+          <End Role="book_table" Type="Self.book_table" Multiplicity="1" />
+          <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book_table">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="author_book">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_book_table_bookstore_table">
+          <End Role="bookstore_table" Type="Self.bookstore_table" Multiplicity="1" />
+          <End Role="book_table" Type="Self.book_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bookstore_table">
+              <PropertyRef Name="bookstore_id" />
+            </Principal>
+            <Dependent Role="book_table">
+              <PropertyRef Name="bookstore_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookstoreDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="author_table" EntityType="Self.author_table" />
+          <EntitySet Name="book_table" EntityType="Self.book_table" />
+          <EntitySet Name="bookstore_table" EntityType="Self.bookstore_table" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="author_book" EntityType="Self.author_book" />
+          <AssociationSet Name="FK_author_book_author_table" Association="Self.FK_author_book_author_table">
+            <End Role="author_table" EntitySet="author_table" />
+            <End Role="author_book" EntitySet="author_book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_author_book_book_table1" Association="Self.FK_author_book_book_table1">
+            <End Role="book_table" EntitySet="book_table" />
+            <End Role="author_book" EntitySet="author_book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_book_table_bookstore_table" Association="Self.FK_book_table_bookstore_table">
+            <End Role="bookstore_table" EntitySet="bookstore_table" />
+            <End Role="book_table" EntitySet="book_table" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BookstoreDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BookstoreDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="AddNewAuthor">
+            <Parameter Name="AuthorName" Mode="In" Type="String" />
+            <Parameter Name="AuthorAge" Mode="In" Type="Int32" />
+            <Parameter Name="AuthorCountry" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddNewBook">
+            <Parameter Name="BookTitle" Mode="In" Type="String" />
+            <Parameter Name="BookPrice" Mode="In" Type="Int32" />
+            <Parameter Name="BookGenre" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddNewBookstore">
+            <Parameter Name="BookstoreLocation" Mode="In" Type="String" />
+            <Parameter Name="BookstoreName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteAuthorByID">
+            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteBookByID">
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteBookstoreByID">
+            <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAuthorByID" ReturnType="Collection(BookstoreDBModel.GetAuthorByID_Result)">
+            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBookByID" ReturnType="Collection(BookstoreDBModel.GetBookByID_Result)">
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBookstoreByID" ReturnType="Collection(BookstoreDBModel.GetBookstoreByID_Result)">
+            <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAuthor">
+            <Parameter Name="AuthorName" Mode="In" Type="String" />
+            <Parameter Name="AuthorCountry" Mode="In" Type="String" />
+            <Parameter Name="AuthorAge" Mode="In" Type="Int32" />
+            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateBook">
+            <Parameter Name="BookTitle" Mode="In" Type="String" />
+            <Parameter Name="BookGenre" Mode="In" Type="String" />
+            <Parameter Name="BookPrice" Mode="In" Type="Int32" />
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateBookstore">
+            <Parameter Name="BookstoreLocation" Mode="In" Type="String" />
+            <Parameter Name="BookstoreName" Mode="In" Type="String" />
+            <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spAddNewAuthor">
+            <Parameter Name="AuthorName" Mode="In" Type="String" />
+            <Parameter Name="AuthorAge" Mode="In" Type="Byte" />
+            <Parameter Name="AuthorCountry" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spAddNewBook">
+            <Parameter Name="BookTitle" Mode="In" Type="String" />
+            <Parameter Name="BookPrice" Mode="In" Type="Int32" />
+            <Parameter Name="BookGenre" Mode="In" Type="String" />
+            <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spAddNewBookstore">
+            <Parameter Name="BookstoreLocation" Mode="In" Type="String" />
+            <Parameter Name="BookstoreName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spDeleteAuthorByID">
+          <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spDeleteBookByID">
+          <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spDeleteBookstoreByID">
+          <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetAuthorByID" ReturnType="Collection(BookstoreDBModel.spGetAuthorByID_Result)">
+          <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetBookByID" ReturnType="Collection(BookstoreDBModel.spGetBookByID_Result)">
+          <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetBookstoreByID" ReturnType="Collection(BookstoreDBModel.spGetBookstoreByID_Result)">
+          <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateAuthor">
+            <Parameter Name="AuthorName" Mode="In" Type="String" />
+            <Parameter Name="AuthorCountry" Mode="In" Type="String" />
+            <Parameter Name="AuthorAge" Mode="In" Type="Int32" />
+            <Parameter Name="AuthorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateBook">
+            <Parameter Name="BookTitle" Mode="In" Type="String" />
+            <Parameter Name="BookGenre" Mode="In" Type="String" />
+            <Parameter Name="BookPrice" Mode="In" Type="Int32" />
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateBookstore">
+            <Parameter Name="BookstoreLocation" Mode="In" Type="String" />
+            <Parameter Name="BookstoreName" Mode="In" Type="String" />
+            <Parameter Name="BookstoreID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAuthorByID_Result">
+          <Property Type="Byte" Name="author_age" Nullable="true" />
+          <Property Type="String" Name="author_country" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="author_name" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetBookByID_Result">
+          <Property Type="String" Name="book_genre" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="book_price" Nullable="false" />
+          <Property Type="String" Name="book_title" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="GetBookstoreByID_Result">
+          <Property Type="String" Name="bookstore_location" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="bookstore_name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spGetAuthorByID_Result">
+          <Property Type="Byte" Name="author_age" Nullable="true" />
+          <Property Type="String" Name="author_country" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="author_name" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spGetBookByID_Result">
+          <Property Type="String" Name="book_genre" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="book_price" Nullable="false" />
+          <Property Type="String" Name="book_title" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spGetBookstoreByID_Result">
+          <Property Type="String" Name="bookstore_location" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="bookstore_name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookstoreDBModelStoreContainer" CdmEntityContainer="BookstoreDBEntities">
+          <EntitySetMapping Name="author_table">
+            <EntityTypeMapping TypeName="BookstoreDBModel.author_table">
+              <MappingFragment StoreEntitySet="author_table">
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="author_name" ColumnName="author_name" />
+                <ScalarProperty Name="author_country" ColumnName="author_country" />
+                <ScalarProperty Name="author_age" ColumnName="author_age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="book_table">
+            <EntityTypeMapping TypeName="BookstoreDBModel.book_table">
+              <MappingFragment StoreEntitySet="book_table">
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="book_title" ColumnName="book_title" />
+                <ScalarProperty Name="book_price" ColumnName="book_price" />
+                <ScalarProperty Name="book_genre" ColumnName="book_genre" />
+                <ScalarProperty Name="bookstore_id" ColumnName="bookstore_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bookstore_table">
+            <EntityTypeMapping TypeName="BookstoreDBModel.bookstore_table">
+              <MappingFragment StoreEntitySet="bookstore_table">
+                <ScalarProperty Name="bookstore_id" ColumnName="bookstore_id" />
+                <ScalarProperty Name="bookstore_name" ColumnName="bookstore_name" />
+                <ScalarProperty Name="bookstore_location" ColumnName="bookstore_location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BookstoreDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="author_book">
+            <EntityTypeMapping TypeName="BookstoreDBModel.author_book">
+              <MappingFragment StoreEntitySet="author_book">
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="author_book_id" ColumnName="author_book_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="BookstoreDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="BookstoreDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="BookstoreDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="BookstoreDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookstoreDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="BookstoreDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookstoreDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BookstoreDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BookstoreDBModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="spAddNewAuthor" FunctionName="BookstoreDBModel.Store.spAddNewAuthor" />
+          <FunctionImportMapping FunctionImportName="spAddNewBook" FunctionName="BookstoreDBModel.Store.spAddNewBook" />
+          <FunctionImportMapping FunctionImportName="spAddNewBookstore" FunctionName="BookstoreDBModel.Store.spAddNewBookstore" />
+          <FunctionImportMapping FunctionImportName="spDeleteAuthorByID" FunctionName="BookstoreDBModel.Store.spDeleteAuthorByID" />
+          <FunctionImportMapping FunctionImportName="spDeleteBookByID" FunctionName="BookstoreDBModel.Store.spDeleteBookByID" />
+          <FunctionImportMapping FunctionImportName="spDeleteBookstoreByID" FunctionName="BookstoreDBModel.Store.spDeleteBookstoreByID" />
+          <FunctionImportMapping FunctionImportName="spGetAuthorByID" FunctionName="BookstoreDBModel.Store.spGetAuthorByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookstoreDBModel.spGetAuthorByID_Result">
+                <ScalarProperty Name="author_age" ColumnName="author_age" />
+                <ScalarProperty Name="author_country" ColumnName="author_country" />
+                <ScalarProperty Name="author_name" ColumnName="author_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetBookByID" FunctionName="BookstoreDBModel.Store.spGetBookByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookstoreDBModel.spGetBookByID_Result">
+                <ScalarProperty Name="book_genre" ColumnName="book_genre" />
+                <ScalarProperty Name="book_price" ColumnName="book_price" />
+                <ScalarProperty Name="book_title" ColumnName="book_title" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetBookstoreByID" FunctionName="BookstoreDBModel.Store.spGetBookstoreByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookstoreDBModel.spGetBookstoreByID_Result">
+                <ScalarProperty Name="bookstore_location" ColumnName="bookstore_location" />
+                <ScalarProperty Name="bookstore_name" ColumnName="bookstore_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spUpdateAuthor" FunctionName="BookstoreDBModel.Store.spUpdateAuthor" />
+          <FunctionImportMapping FunctionImportName="spUpdateBook" FunctionName="BookstoreDBModel.Store.spUpdateBook" />
+          <FunctionImportMapping FunctionImportName="spUpdateBookstore" FunctionName="BookstoreDBModel.Store.spUpdateBookstore" />
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

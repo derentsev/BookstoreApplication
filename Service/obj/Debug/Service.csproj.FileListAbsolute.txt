@@ -1,0 +1,14 @@
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\Service.dll
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\Service.pdb
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\obj\Debug\Service.csprojResolveAssemblyReference.cache
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\obj\Debug\Service.dll
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\obj\Debug\Service.pdb
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\Service.dll.config
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\DAL.dll
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\EntityFramework.dll
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\DAL.pdb
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\EntityFramework.xml
+c:\users\1914\documents\visual studio 2015\Projects\BookstoreApp\Service\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\1914\Documents\Visual Studio 2015\Projects\BookstoreApp\Service\bin\Debug\AutoMapper.dll
+C:\Users\1914\Documents\Visual Studio 2015\Projects\BookstoreApp\Service\bin\Debug\AutoMapper.xml

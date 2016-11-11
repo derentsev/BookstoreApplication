@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookstoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BookstoreDB.dbo.author_book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="author_book">
+    <Key>
+      <PropertyRef Name="author_id" />
+      <PropertyRef Name="book_id" />
+      <PropertyRef Name="author_book_id" />
+    </Key>
+    <Property Name="author_id" Type="int" Nullable="false" />
+    <Property Name="book_id" Type="int" Nullable="false" />
+    <Property Name="author_book_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="author_table">
+    <Key>
+      <PropertyRef Name="author_id" />
+    </Key>
+    <Property Name="author_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="author_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="author_country" Type="nvarchar" MaxLength="25" />
+    <Property Name="author_age" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="book_table">
+    <Key>
+      <PropertyRef Name="book_id" />
+    </Key>
+    <Property Name="book_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="author_id" Type="int" Nullable="false" />
+    <Property Name="book_title" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="book_price" Type="int" Nullable="false" />
+    <Property Name="book_genre" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="bookstore_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="bookstore_table">
+    <Key>
+      <PropertyRef Name="bookstore_id" />
+    </Key>
+    <Property Name="bookstore_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bookstore_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="bookstore_location" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_author_book_author_table">
+    <End Role="author_table" Type="Self.author_table" Multiplicity="1" />
+    <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="author_table">
+        <PropertyRef Name="author_id" />
+      </Principal>
+      <Dependent Role="author_book">
+        <PropertyRef Name="author_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_author_book_book_table1">
+    <End Role="book_table" Type="Self.book_table" Multiplicity="1" />
+    <End Role="author_book" Type="Self.author_book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_table">
+        <PropertyRef Name="book_id" />
+      </Principal>
+      <Dependent Role="author_book">
+        <PropertyRef Name="book_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_book_table_bookstore_table">
+    <End Role="bookstore_table" Type="Self.bookstore_table" Multiplicity="1" />
+    <End Role="book_table" Type="Self.book_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookstore_table">
+        <PropertyRef Name="bookstore_id" />
+      </Principal>
+      <Dependent Role="book_table">
+        <PropertyRef Name="bookstore_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spAddNewAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AuthorName" Type="varchar" Mode="In" />
+    <Parameter Name="AuthorAge" Type="tinyint" Mode="In" />
+    <Parameter Name="AuthorCountry" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spAddNewBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookTitle" Type="varchar" Mode="In" />
+    <Parameter Name="BookPrice" Type="int" Mode="In" />
+    <Parameter Name="BookGenre" Type="varchar" Mode="In" />
+    <Parameter Name="BookstoreID" Type="int" Mode="In" />
+    <Parameter Name="AuthorID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spAddNewBookstore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookstoreLocation" Type="varchar" Mode="In" />
+    <Parameter Name="BookstoreName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spDeleteAuthorByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AuthorID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spDeleteBookByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spDeleteBookstoreByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookstoreID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spGetAuthorByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AuthorID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spGetBookByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spGetBookstoreByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookstoreID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUpdateAuthor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AuthorName" Type="varchar" Mode="In" />
+    <Parameter Name="AuthorCountry" Type="varchar" Mode="In" />
+    <Parameter Name="AuthorAge" Type="int" Mode="In" />
+    <Parameter Name="AuthorID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUpdateBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookTitle" Type="varchar" Mode="In" />
+    <Parameter Name="BookGenre" Type="varchar" Mode="In" />
+    <Parameter Name="BookPrice" Type="int" Mode="In" />
+    <Parameter Name="BookID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUpdateBookstore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookstoreLocation" Type="varchar" Mode="In" />
+    <Parameter Name="BookstoreName" Type="varchar" Mode="In" />
+    <Parameter Name="BookstoreID" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="BookstoreDBModelStoreContainer">
+    <EntitySet Name="author_table" EntityType="Self.author_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="book_table" EntityType="Self.book_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="bookstore_table" EntityType="Self.bookstore_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="author_book" EntityType="Self.author_book" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [author_book].[author_id] AS [author_id], 
+    [author_book].[book_id] AS [book_id], 
+    [author_book].[author_book_id] AS [author_book_id]
+    FROM [dbo].[author_book] AS [author_book]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_author_book_author_table" Association="Self.FK_author_book_author_table">
+      <End Role="author_table" EntitySet="author_table" />
+      <End Role="author_book" EntitySet="author_book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_author_book_book_table1" Association="Self.FK_author_book_book_table1">
+      <End Role="book_table" EntitySet="book_table" />
+      <End Role="author_book" EntitySet="author_book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_book_table_bookstore_table" Association="Self.FK_book_table_bookstore_table">
+      <End Role="bookstore_table" EntitySet="bookstore_table" />
+      <End Role="book_table" EntitySet="book_table" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
